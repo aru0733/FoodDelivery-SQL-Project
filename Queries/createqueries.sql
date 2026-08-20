@@ -1,4 +1,4 @@
- --2. Customers
+ --1. Customers
 
 
 Create Table Customers
@@ -49,7 +49,7 @@ SELECT *
 FROM INFORMATION_SCHEMA.TABLES
 WHERE TABLE_TYPE = 'BASE TABLE';
 
---3.Deliveries
+--4.Deliveries
 
 CREATE TABLE Deliveries
 (
@@ -66,7 +66,7 @@ CREATE TABLE Deliveries
     delivery_status VARCHAR(30) NOT NULL
 );
 
--- 4. Menu Items
+-- 5. Menu Items
 
 CREATE TABLE Menu_Items
 (
@@ -92,7 +92,7 @@ WHERE OBJECT_NAME(fk.parent_object_id) = 'Menu_Items';
 
 
 -- =============================================
--- 5. Orders
+-- 6. Orders
 -- =============================================
 
 CREATE TABLE Orders
@@ -115,7 +115,7 @@ CREATE TABLE Orders
 
 
 -- =============================================
--- 6. Order Items
+-- 7. Order Items
 -- =============================================
 
 CREATE TABLE Order_Items
@@ -133,4 +133,29 @@ CREATE TABLE Order_Items
     CONSTRAINT FK_OrderItems_MenuItems
         FOREIGN KEY (item_id)
         REFERENCES Menu_Items(item_id)
+);
+
+
+
+SELECT TABLE_NAME
+FROM INFORMATION_SCHEMA.TABLES
+WHERE TABLE_TYPE = 'BASE TABLE'
+ORDER BY TABLE_NAME;
+
+-- =============================================
+-- 8. Payments
+-- =============================================
+
+CREATE TABLE Payments
+(
+    payment_id INT PRIMARY KEY,
+    order_id INT NOT NULL,
+    payment_method VARCHAR(30) NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    payment_status VARCHAR(30) NOT NULL,
+    payment_date DATETIME NOT NULL,
+
+    CONSTRAINT FK_Payments_Orders
+        FOREIGN KEY (order_id)
+        REFERENCES Orders(order_id)
 );

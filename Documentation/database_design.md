@@ -156,3 +156,114 @@ Columns:
 - status - current partner status
 
 The partner_id is the primary key.
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+## Menu_Items Table
+
+The Menu_Items table stores the food items offered by each
+restaurant.
+
+Columns:
+
+- item_id - unique ID of the menu item
+- restaurant_id - identifies the restaurant offering the item
+- item_name - name of the food item
+- category - category of the item
+- calories - approximate calories in the item
+- price - selling price of the item
+- status - current availability/status of the item
+
+The item_id is the primary key.
+
+The restaurant_id is a foreign key referencing the
+Restaurants table.
+
+Relationship:
+
+Restaurants 1 ---- M Menu_Items
+
+One restaurant can have many menu items.
+------------------------------------------------------------------------------------------------------------------------------------
+
+## Orders Table
+
+The Orders table stores information about orders placed by
+customers.
+
+Columns:
+
+- order_id - unique ID of the order
+- customer_id - identifies the customer who placed the order
+- restaurant_id - identifies the restaurant receiving the order
+- order_date - date and time when the order was placed
+- order_status - current status of the order
+- total_amount - total value of the order
+
+The order_id is the primary key.
+
+The customer_id is a foreign key referencing Customers.
+
+The restaurant_id is a foreign key referencing Restaurants.
+
+Relationships:
+
+Customers 1 ---- M Orders
+
+Restaurants 1 ---- M Orders
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+
+## Order_Items Table
+
+The Order_Items table stores the individual menu items included
+in each customer order.
+
+An order can contain multiple items, so order details are stored
+separately from the Orders table.
+
+Columns:
+
+- order_item_id - unique ID for the order item record
+- order_id - identifies the order
+- item_id - identifies the menu item
+- quantity - number of units ordered
+- unit_price - price of the item at the time of the order
+
+The order_item_id is the primary key.
+
+The order_id is a foreign key referencing Orders.
+
+The item_id is a foreign key referencing Menu_Items.
+
+Relationship:
+
+Orders 1 ---- M Order_Items
+
+Menu_Items 1 ---- M Order_Items
+
+------------------------------------------------------------------------------------------------------------------------------------
+## Payments Table
+
+The Payments table stores payment information for customer orders.
+
+Columns:
+
+- payment_id - unique ID of the payment
+- order_id - identifies the order associated with the payment
+- payment_method - method used to make the payment
+- amount - amount paid
+- payment_status - current status of the payment
+- payment_date - date and time of the payment
+
+The payment_id is the primary key.
+
+The order_id is a foreign key referencing the Orders table.
+
+For this project, each order has one payment record.
+
+Relationship:
+
+Orders 1 ---- 1 Payments
