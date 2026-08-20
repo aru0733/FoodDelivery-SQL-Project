@@ -267,3 +267,31 @@ For this project, each order has one payment record.
 Relationship:
 
 Orders 1 ---- 1 Payments
+
+------------------------------------------------------------------------------------------------------------------------------------
+## Reviews Table
+
+The Reviews table stores customer feedback for restaurants
+after an order.
+
+Columns:
+
+- review_id - unique ID of the review
+- customer_id - customer who submitted the review
+- restaurant_id - restaurant being reviewed
+- order_id - order associated with the review
+- rating - rating given by the customer
+- review_text - written feedback
+- review_date - date and time of the review
+
+The review_id is the primary key.
+
+customer_id, restaurant_id and order_id are foreign keys.
+
+Relationships:
+
+Customers 1 ---- M Reviews
+
+Restaurants 1 ---- M Reviews
+
+Orders 1 ---- M Reviews
