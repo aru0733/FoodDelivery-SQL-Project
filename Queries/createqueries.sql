@@ -49,7 +49,7 @@ SELECT *
 FROM INFORMATION_SCHEMA.TABLES
 WHERE TABLE_TYPE = 'BASE TABLE';
 
---34.Deliveries
+--3.Deliveries
 
 CREATE TABLE Deliveries
 (
@@ -64,4 +64,73 @@ CREATE TABLE Deliveries
     delivered_at DATETIME,
 
     delivery_status VARCHAR(30) NOT NULL
+);
+
+-- 4. Menu Items
+
+CREATE TABLE Menu_Items
+(
+    item_id INT PRIMARY KEY,
+    restaurant_id INT NOT NULL,
+    item_name VARCHAR(100) NOT NULL,
+    category VARCHAR(50),
+    calories INT,
+    price DECIMAL(10,2),
+    status VARCHAR(20),
+
+    CONSTRAINT FK_MenuItems_Restaurants
+        FOREIGN KEY (restaurant_id)
+        REFERENCES Restaurants(restaurant_id)
+);
+
+SELECT
+    fk.name AS ForeignKeyName,
+    OBJECT_NAME(fk.parent_object_id) AS ChildTable,
+    OBJECT_NAME(fk.referenced_object_id) AS ParentTable
+FROM sys.foreign_keys fk
+WHERE OBJECT_NAME(fk.parent_object_id) = 'Menu_Items';
+
+
+-- =============================================
+-- 5. Orders
+-- =============================================
+
+CREATE TABLE Orders
+(
+    order_id INT PRIMARY KEY,
+    customer_id INT NOT NULL,
+    restaurant_id INT NOT NULL,
+    order_date DATETIME NOT NULL,
+    order_status VARCHAR(30) NOT NULL,
+    total_amount DECIMAL(10,2) NOT NULL,
+
+    CONSTRAINT FK_Orders_Customers
+        FOREIGN KEY (customer_id)
+        REFERENCES Customers(customer_id),
+
+    CONSTRAINT FK_Orders_Restaurants
+        FOREIGN KEY (restaurant_id)
+        REFERENCES Restaurants(restaurant_id)
+);
+
+
+-- =============================================
+-- 6. Order Items
+-- =============================================
+
+CREATE TABLE Order_Items
+(
+    order_item_id INT PRIMARY KEY,
+    order_id INT NOT NULL,
+    item_id INT NOT NULL,
+    quantity INT NOT NULL,
+    unit_price DECIMAL(10,2) NOT NULL,
+
+    CONSTRAINT FK_OrderItems_Orders
+        FOREIGN KEY (order_id)
+        REFERENCES Orders(order_id),
+
+    CONSTRAINT FK_OrderItems_MenuItems
+        FOREIGN KEY (item_id)
+        REFERENCES Menu_Items(item_id)
 );
