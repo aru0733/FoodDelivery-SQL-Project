@@ -121,3 +121,38 @@ should have a name.
 
 I used UNIQUE for email so that the same email cannot be used
 for multiple customer records.
+------------------------------------------------------------------------------------------------------------------------------------
+## Restaurants Table
+
+The Restaurants table stores information about restaurants
+available on the platform.
+
+Columns:
+
+- restaurant_id - unique ID of the restaurant
+- restaurant_name - name of the restaurant
+- phone - restaurant contact number
+- address - restaurant address
+- city - restaurant city
+- cuisine_type - type of food served
+- rating - restaurant rating
+- status - current restaurant status
+
+The restaurant_id is the primary key.
+------------------------------------------------------------------------------------------------------------------------------------
+
+## Delivery_Partners Table
+
+The Delivery_Partners table stores information about people
+who deliver orders.
+
+Columns:
+
+- partner_id - unique ID of the delivery partner
+- partner_name - partner's name
+- phone - contact number
+- city - city where the partner operates
+- joining_date - date the partner joined
+- status - current partner status
+
+The partner_id is the primary key.
